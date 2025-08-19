@@ -29,14 +29,20 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
         }
         
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
         }
         
         .timer {
@@ -76,11 +82,27 @@
             font-weight: bold;
         }
         
-        .instructions {
-            margin-top: 30px;
-            font-size: 1.1rem;
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4facfe;
+        }
+        
+        .info-content {
             line-height: 1.6;
-            color: #e0e0e0;
+        }
+        
+        .highlight {
+            color: #fdbb2d;
+            font-weight: bold;
         }
         
         @media (max-width: 600px) {
@@ -101,14 +123,22 @@
 <body>
     <div class="container">
         <h1>10-Hour Cooldown Timer</h1>
+        <div class="subtitle">Personal countdown with browser persistence</div>
+        
         <div class="timer" id="timer">10:00:00</div>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         <div class="completed" id="completed">Cooldown Complete!</div>
-        <div class="instructions">
-            <p>This timer will count down from 10 hours. When it reaches zero, the cooldown period will be complete.</p>
-            <p>You can leave this page open or close it - the timer will continue counting down.</p>
+        
+        <div class="info-box">
+            <div class="info-title">How This Timer Works:</div>
+            <div class="info-content">
+                <p>• <span class="highlight">Browser-specific</span>: Each user/browser has their own independent timer</p>
+                <p>• <span class="highlight">Persistent</span>: Timer continues if you close the page and return later</p>
+                <p>• <span class="highlight">Not shared</span>: Other users will see their own timers, not yours</p>
+                <p>• <span class="highlight">Reset</span>: Clear browser data or use private browsing to start over</p>
+            </div>
         </div>
     </div>
 
