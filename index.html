@@ -1,41 +1,27 @@
--- Roblox Trophy Countdown Timer Script
--- Place this in a TextLabel or TextButton
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local timerLabel = Instance.new("TextLabel")
 
-local timerLabel = script.Parent  -- Assumes this script is inside the GUI element
-local endTime = os.time() + 10 * 60 * 60  -- 10 hours from now
+timerLabel.Size = UDim2.new(0, 200, 0, 50)
+timerLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
+timerLabel.TextScaled = true
+timerLabel.Parent = player:WaitForChild("PlayerGui")
 
-local function formatTime(seconds)
-    local hours = math.floor(seconds / 3600)
-    local minutes = math.floor((seconds % 3600) / 60)
-    local seconds = seconds % 60
-    return string.format("%02d:%02d:%02d", hours, minutes, seconds)
-end
+local countdownTime = 10 * 24 * 60 * 60 -- 10 days in seconds
+local startTime = os.time()
 
-local function updateTimer()
-    local currentTime = os.time()
-    local timeLeft = endTime - currentTime
-    
-    if timeLeft <= 0 then
-        timerLabel.Text = "TIME'S UP!"
-        timerLabel.TextColor3 = Color3.fromRGB(255, 50, 50)  -- Red color
-        return
-    end
-    
-    timerLabel.Text = formatTime(timeLeft)
-    
-    -- Optional: Add visual effects based on time remaining
-    if timeLeft < 300 then  -- Less than 5 minutes
-        timerLabel.TextColor3 = Color3.fromRGB(255, 100, 100)  -- Light red
-    elseif timeLeft < 1800 then  -- Less than 30 minutes
-        timerLabel.TextColor3 = Color3.fromRGB(255, 150, 100)  -- Orange
-    else
-        timerLabel.TextColor3 = Color3.fromRGB(50, 200, 100)  -- Green
-    end
-end
+while countdownTime > 0 do
+    local elapsedTime = os.time() - startTime
+    local remainingTime = countdownTime - elapsedTime
 
--- Update immediately and then every second
-updateTimer()
-while true do
+    local days = math.floor(remainingTime / (24 * 60 * 60))
+    local hours = math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
+    local minutes = math.floor((remainingTime % (60 * 60)) / 60)
+    local seconds = remainingTime % 60
+
+    timerLabel.Text = string.format("%dd %dh %dm %ds", days, hours, minutes, seconds)
+
     wait(1)
-    updateTimer()
 end
+
+timerLabel.Text = "EXPIRED"
