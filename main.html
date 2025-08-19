@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUCKING TIMBER COUNTDOWN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #2b2118, #1a130d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #3e2e20;
+            border: 12px solid #5d4b34;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(to bottom, #6b563f, #4c3b28);
+            border-bottom: 3px solid #8a7356;
+            z-index: 2;
+        }
+        
+        .container::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(to top, #6b563f, #4c3b28);
+            border-top: 3px solid #8a7356;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e6c79c;
+            text-shadow: 4px 4px 0 #000, 
+                         -2px -2px 0 #000, 
+                         2px -2px 0 #000, 
+                         -2px 2px 0 #000;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .countdown {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ff8c42;
+            text-shadow: 3px 3px 0 #000, 
+                         -1px -1px 0 #000, 
+                         1px -1px 0 #000, 
+                         -1px 1px 0 #000;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #2b2118;
+            border: 8px solid #5d4b34;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .wood-grain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(90deg, rgba(139, 69, 19, 0.1) 0%, transparent 50%, rgba(139, 69, 19, 0.1) 100%),
+                linear-gradient(0deg, rgba(101, 67, 33, 0.2) 0%, transparent 5%, transparent 95%, rgba(101, 67, 33, 0.2) 100%);
+            opacity: 0.7;
+        }
+        
+        .knot {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #2b2118 0%, #3e2e20 70%);
+            border: 4px solid #5d4b34;
+            box-shadow: inset 0 0 15px #000;
+        }
+        
+        .knot-1 {
+            top: 30px;
+            right: 40px;
+        }
+        
+        .knot-2 {
+            bottom: 50px;
+            left: 35px;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #2b2118;
+            border: 5px solid #5d4b34;
+            border-radius: 10px;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .instructions h2 {
+            color: #e6c79c;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .roblox-script {
+            background-color: #1a130d;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #5d4b34;
+            margin-top: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            color: #e6c79c;
+            text-align: left;
+            white-space: pre-wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .highlight {
+            color: #ff8c42;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #8a7356;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
