@@ -1,27 +1,34 @@
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local timerLabel = Instance.new("TextLabel")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <script>
+        let countdownDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000); // 10 days in milliseconds
 
-timerLabel.Size = UDim2.new(0, 200, 0, 50)
-timerLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
-timerLabel.TextScaled = true
-timerLabel.Parent = player:WaitForChild("PlayerGui")
+        function updateCountdown() {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
 
-local countdownTime = 10 * 24 * 60 * 60 -- 10 days in seconds
-local startTime = os.time()
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-while countdownTime > 0 do
-    local elapsedTime = os.time() - startTime
-    local remainingTime = countdownTime - elapsedTime
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
-    local days = math.floor(remainingTime / (24 * 60 * 60))
-    local hours = math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60))
-    local minutes = math.floor((remainingTime % (60 * 60)) / 60)
-    local seconds = remainingTime % 60
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+            }
+        }
 
-    timerLabel.Text = string.format("%dd %dh %dm %ds", days, hours, minutes, seconds)
-
-    wait(1)
-end
-
-timerLabel.Text = "EXPIRED"
+        let x = setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <div id="countdown"></div>
+</body>
+</html>
