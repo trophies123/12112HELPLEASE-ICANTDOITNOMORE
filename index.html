@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10-Hour Cooldown Timer</title>
+    <title>Shared 10-Hour Cooldown Timer</title>
     <style>
         * {
             margin: 0;
@@ -122,8 +122,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>10-Hour Cooldown Timer</h1>
-        <div class="subtitle">Personal countdown with browser persistence</div>
+        <h1>Shared 10-Hour Cooldown Timer</h1>
+        <div class="subtitle">Synchronized countdown for all users</div>
         
         <div class="timer" id="timer">10:00:00</div>
         <div class="progress-container">
@@ -134,10 +134,10 @@
         <div class="info-box">
             <div class="info-title">How This Timer Works:</div>
             <div class="info-content">
-                <p>• <span class="highlight">Browser-specific</span>: Each user/browser has their own independent timer</p>
-                <p>• <span class="highlight">Persistent</span>: Timer continues if you close the page and return later</p>
-                <p>• <span class="highlight">Not shared</span>: Other users will see their own timers, not yours</p>
-                <p>• <span class="highlight">Reset</span>: Clear browser data or use private browsing to start over</p>
+                <p>• <span class="highlight">Synchronized</span>: All users see the same remaining time</p>
+                <p>• <span class="highlight">Fixed start time</span>: Based on a predetermined start point</p>
+                <p>• <span class="highlight">No persistence needed</span>: Always shows correct time even after refresh</p>
+                <p>• <span class="highlight">Server time based</span>: Uses your device's current time</p>
             </div>
         </div>
     </div>
@@ -145,6 +145,11 @@
     <script>
         // Set the cooldown period to 10 hours (in milliseconds)
         const cooldownPeriod = 10 * 60 * 60 * 1000; // 10 hours in milliseconds
+        
+        // FIXED START TIME - This is what makes the timer the same for everyone
+        // Format: "Month Day, Year HH:MM:SS" (Time is in UTC/GMT)
+        // Change this to your desired start time
+        const fixedStartTime = new Date("October 20, 2023 12:00:00").getTime();
         
         // Function to format time with leading zeros
         function formatTime(ms) {
@@ -163,20 +168,18 @@
         
         // Function to update the timer
         function updateTimer() {
-            // Get the end time from localStorage or set it if it doesn't exist
-            let endTime = localStorage.getItem('cooldownEndTime');
-            
-            if (!endTime) {
-                // First visit - set the end time to 10 hours from now
-                endTime = Date.now() + cooldownPeriod;
-                localStorage.setItem('cooldownEndTime', endTime);
-            } else {
-                endTime = parseInt(endTime);
-            }
-            
-            // Calculate remaining time
+            // Calculate remaining time based on fixed start time
             const currentTime = Date.now();
-            let remainingTime = endTime - currentTime;
+            const elapsedTime = currentTime - fixedStartTime;
+            let remainingTime = cooldownPeriod - elapsedTime;
+            
+            // Check if the cooldown hasn't started yet
+            if (remainingTime > cooldownPeriod) {
+                document.getElementById('timer').textContent = "Not started";
+                document.getElementById('progress-bar').style.width = '0%';
+                setTimeout(updateTimer, 1000);
+                return;
+            }
             
             // Check if the cooldown has completed
             if (remainingTime <= 0) {
@@ -190,15 +193,22 @@
             document.getElementById('timer').textContent = formatTime(remainingTime);
             
             // Update progress bar
-            const progress = ((cooldownPeriod - remainingTime) / cooldownPeriod) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
+            const progress = (elapsedTime / cooldownPeriod) * 100;
+            document.getElementById('progress-bar').style.width = `${Math.min(progress, 100)}%`;
             
             // Schedule the next update
             setTimeout(updateTimer, 1000);
         }
         
-        // Start the timer when the page loads
-        window.onload = updateTimer;
+        // Display the fixed start time in the info box
+        document.addEventListener('DOMContentLoaded', function() {
+            const startTimeElement = document.createElement('p');
+            startTimeElement.innerHTML = `<span class="highlight">Start Time:</span> ${new Date(fixedStartTime).toUTCString()}`;
+            document.querySelector('.info-content').appendChild(startTimeElement);
+            
+            // Start the timer
+            updateTimer();
+        });
     </script>
 </body>
 </html>
